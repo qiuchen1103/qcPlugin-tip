@@ -1,0 +1,5 @@
+.floatTipDiv {
+  position: fixed;
+  background-color: white;
+  border: medium double #fa00ff;
+}
