@@ -1,75 +1,58 @@
-(function(window, $, undefined) {
-	var config = {
-		op : null,
-		content : "<div class='floatTipDiv' style='position:fixed;"+
-		  "background:white;border:medium double rgb(250,0,255)'></div>"
+;(function(window, $, undefined) {
+	var FloatTip = function(ele, opt) {
+		this.$element = ele;
+		this.defaults = {
+			'floatCtn': '无内容',
+			'floatPadding': "5px 10px",
+			'floatBgColor': 'white',
+			'floatBorderWidth': '1px',
+			'floatBorderStyle': 'solid',
+			'floatBorderColor': '#000',
+			'floatBorderRadius': '5px'
+			
+		}
+		this.options = $.extend({}, this.defaults, opt);
 	};
-
-	function FloatTip() {
-		this.init();
-	}
 
 	FloatTip.prototype = {
-		init : function() {
-			if ($(".floatTip")) {
-				config.op = $(".floatTip");
-			}	
-			return;		
-		},
-		setCont : function(str) {
-			config.op.append(config.content);
+		setFloatTip: function() {
+			this.$element.floatDiv = document.createElement('div');
+			this.$element.floatDiv.id = this.options.floatCtn;
+			this.$element.floatDiv.style.position = 'fixed';
+			this.$element.append(this.$element.floatDiv);
 
-			var ctn = $(".floatTipDiv");
-			// for (var i = 0; i < ctn.length; i++) {
-			// 	ctn[i].html = str[i];
-			// };
-			ctn.html(str);
-			ctn.hide();
-
-			this.bindEvent(ctn);
+			this.$floatDiv = $('#'+this.options.floatCtn).html(this.options.floatCtn);
+			this.$floatDiv.css({
+				'backgroundColor': this.options.floatBgColor,
+				'padding': this.options.floatPadding,
+				'borderWidth': this.options.floatBorderWidth,
+				'borderStyle': this.options.floatBorderStyle,
+				'borderColor': this.options.floatBorderColor,
+				'borderRadius': this.options.floatBorderRadius
+				
+			});
+			this.$floatDiv.hide();
+			this.bindEvent(this.$floatDiv);
+			return this.$floatDiv;
 		},
-		bindEvent : function(content) {
+		bindEvent : function($beBinded) {
 			var _this = this;
-			config.op.mousemove(function(ev) {
-				var position = _this.getMousePos(ev);
-				content.show();
-				content.css({
-					left: position.x+_this.getX(config.op[0])+10,
-					top: position.y+_this.getY(config.op[0])+2
+			_this.$element.on('mousemove',function(ev) {
+				var positionX = ev.originalEvent.x || ev.originalEvent.layerX;
+				var positionY = ev.originalEvent.y || ev.originalEvent.layerY; 
+				$beBinded.show().css({
+					left: positionX+15,
+					top: positionY-20
 				});
 			});
-			config.op.mouseout(function() {
-				content.hide();
+			_this.$element.on('mouseout',function() {
+				$beBinded.hide();
 			});
 		},
-		getMousePos : function(ev) {		
-			var left=(ev.clientX-this.getX(config.op[0])+document.body.scrollLeft);
-			var top=(ev.clientY-this.getY(config.op[0])+document.body.scrollTop);
-
-			return {
-				x: left,
-				y: top
-			};					  					
-		},
-		getX : function(obj){ 
-			var left=obj.offsetLeft;  // 相对 有定位属性的父元素 的 border~border距离
-		 // 	while(obj=obj.offsetParent){  // ???自身为有定位属性的父元素???
-		 // 		left+=obj.offsetLeft;  
-			// }  
-	 		return left;  
-		},
-		getY : function(obj){
-			var top=obj.offsetTop;  
-			// while(obj = obj.offsetParent){  
-		 // 		top+=obj.offsetTop;  
-		 // 	}  
-		    return top;  
-		}  
 	};
 
-	var floatTip = new FloatTip();
-
-	window.setFloatTip = function(str) {
-		floatTip.setCont.call(floatTip, str);
+	$.fn.tip = function(options) {
+		var floatTip = new FloatTip(this, options);
+		return floatTip.setFloatTip();
 	};
-})(window, $);
+})(window, jQuery);

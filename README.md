@@ -1,7 +1,13 @@
-引入jquery（2.1.4）和tip.min.js文件
 
-html中-
-给需要提示的容器加上class="floatTip"
+step1.引入jquery（2.1.4）和tip.min.js文件
 
-js中-
-添加一条语句：setFloatTip("需要显示的tip");
+step2.参数设置
+    $(target).tip({
+        'floatCtn': '无内容',
+        'floatPadding': "5px 10px",
+        'floatBgColor': 'white',
+        'floatBorderWidth': '1px',
+        'floatBorderStyle': 'solid',
+        'floatBorderColor': '#000',
+        'floatBorderRadius': '5px'
+    })

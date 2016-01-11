@@ -6,15 +6,23 @@
 </head>
 <body>
 	<p class="floatTip" style="width:300px;height:100px;margin:50px auto;background:yellow">鼠标移上来1</p>
-	<p class="floatTip" style="width:300px;height:100px;margin:50px auto;background:red">鼠标移上来2</p>
-	<p class="floatTip" style="width:300px;height:100px;margin:50px auto;background:blue">鼠标移上来3</p>
+	<p class="floatTip2" style="width:300px;height:100px;margin:50px auto;background:red">鼠标移上来2</p>
+	<p class="floatTip3" style="width:300px;height:100px;margin:50px auto;background:blue">鼠标移上来3</p>
 	<p class="floatTip" style="width:300px;height:100px;margin:50px auto;background:green">鼠标移上来4</p>
 
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/tip.min.js"></script>
 
 	<script type="text/javascript">
-		setFloatTip("哈哈哈");
+		$('.floatTip').tip({
+			'floatCtn': '哈哈哈'
+		});
+		$('.floatTip2').tip({
+			'floatCtn': '嘿嘿'
+		});
+		$('.floatTip3').tip({
+			'floatCtn': '嗯呐'
+		});
 	</script>
 
 </body>
